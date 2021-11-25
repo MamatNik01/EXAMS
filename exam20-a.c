@@ -28,6 +28,8 @@ int main()
 	}
 	
 	printf("str = %s\n", p);
+	printf(".len = %d\n", m);
+	
 	fclose(f);
 	
 	return 0;
