@@ -1,57 +1,133 @@
-#include <stdio.h> //printf
-#include <stdlib.h> //rand
-#define days 31
+#include <stdio.h>
+#include <stdlib.h>
+int days_of_month;
+int pmin, pmax, pnorm;
 int pressure[31];
-#define p_min 740
-#define p_max 780
-#define p_norm 760
- 
-void sortP()
+void key()
 {
-    int i;
-    int ch,t;
-    do
+    for (int i = 0; i < days_of_month; i++)
+            scanf("%d", &pressure[i]);
+}
+void file()
+{
+    FILE *f = fopen("extask06-in.txt", "r");  
     {
-        t = 0;
-        for(i = 1;i < days;i++)
-        {
-            if(pressure[i] >= pressure[i-1]) t++;
-            else
-            {
-                ch = pressure[i];
-                pressure[i] = pressure[i-1];
-                pressure[i-1] = ch;
-            }
-                
-        }
-    }while( t < 30);
+        for (int i = 0; i < days_of_month; i++)
+            fscanf(f, "%d", &pressure[i]);
+    }
+    fclose(f);
+}
+void randomno()
+{
+    printf("arr: ");
+    for (int i = 0; i < days_of_month; i++)
+    {
+        if (i % 7 == 0) printf("\n");
+        pressure[i] = pmin + rand() % (pmax - pmin + 1);
+        printf("%d ", pressure[i]);
+    }
+    printf("\n");
 }
 int main()
 {
-    int i;
-    for(i=0; i<days; i++)
-    pressure[i] = p_min + rand() % (p_max - p_min + 1);
-    printf("day\t pressure\n");
-    for(i=0; i<days; i++)
-    printf("%d\t %d\n", i + 1, pressure[i]);
- 
-    int cnt_below = 0;
-    int cnt_above = 0;
-    int cnt_exact = 0;
-    for (i = 0; i < days; i++)
+    do
     {
-        int v = pressure[i];
-        if (v < p_norm) cnt_below++;
-        else if(v > p_norm) cnt_above++;
-        else cnt_exact++;
- 
+        printf("days_of_month(1-31): ");
+        scanf("%d", &days_of_month);
     }
-    printf("below: %d\n", cnt_below);
-    printf("above: %d\n", cnt_above);
-    printf("exact: %d\n", cnt_exact);
-    
-    sortP();
-    for(i=0; i<days; i++)
-    printf("%d ", pressure[i]);
+    while (days_of_month <= 0 || days_of_month > 31);
+    do
+    {
+        printf("pmin: ");
+        scanf("%d", &pmin);
+    }
+    while (pmin <=0 || pmin > 1000);
+    do
+    {
+        printf("pmax: ");
+        scanf("%d", &pmax);
+    }
+    while (pmax <=0 || pmax > 1000);
+    do
+    {
+        printf("pnorm: ");
+        scanf("%d", &pnorm);
+    }
+    while (pnorm <=0 || pnorm > 1000);
+    int choice;
+    do
+    {
+        printf("1 -  keyboard\n");
+        printf("2 - file\n");
+        printf("3 - random\n");
+        printf("choice: ");
+        scanf("%d", &choice);
+        switch (choice)
+        {
+            case 1: key(); break;
+            case 2: file(); break;
+            case 3: randomno(); break;
+        }
+        printf("\n");
+    }
+    while (choice < 1 || choice > 3);
+    int below = 0;
+    int exact = 0;
+    int above = 0;
+    int choice1;
+    int day;
+    int a = -1;
+    printf("remove?(1 - yes, 2 - no)\n");
+    scanf("%d", &choice1);
+    if (choice1 == 1)
+    {
+        printf("enter the day: ");
+        scanf("%d", &day);
+        pressure[day-1] = a;
+    }
+    else printf("without changes\n");
+    printf("arr: ");
+    for (int i = 0; i < days_of_month; i++)
+    {
+        if (i % 7 == 0) printf("\n");
+        printf("%d ", pressure[i]);
+    }
+    printf("\n");
+    for (int i = 0; i < days_of_month; i++)
+    {
+        if (pressure[i] > a)
+        {
+            if (pressure[i] < pnorm) below++;
+            if (pressure[i] == pnorm) exact++;
+            if (pressure[i] > pnorm) above++;
+        }
+    }
+    printf("below: %d\n", below);
+    printf("exact: %d\n", exact);
+    printf("above: %d\n", above);
+    choice1 = 0;
+    printf("sort?(1 - yes, 2 - no)\n");
+    scanf("%d", &choice1);
+    if (choice1 == 1)
+    {
+        for(int i = 1; i < days_of_month; i++)
+        for (int j = 0; j < days_of_month - 1; j++)                
+        {
+            if (pressure[j] > pressure[j + 1])
+                {
+                    int t = pressure[j];
+                    pressure[j] = pressure[j + 1];
+                    pressure[j + 1] = t;
+                }
+        }
+        printf("sorted array");
+        for (int i = 0; i < days_of_month; i++)
+        {
+            if (i % 7 == 0) printf("\n");
+            printf("%d ", pressure[i]);
+        }
+        printf("\n");
+    }
+    else printf("the array not sorted\n"); 
     return 0;
 }
