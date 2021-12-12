@@ -28,7 +28,7 @@ int main()
     if (n > 0) m++;
     printf("words: %d\n", m);
     for (int i = 0; i < n; i++)
-    printf("%c", s[i]);
+        printf("%c", s[i]);
     printf("\n");
     int bb = 0;
     int c = 0;
