@@ -1,0 +1,1 @@
+kotov 300 2 1 correct = 0

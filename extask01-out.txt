@@ -1,0 +1,10 @@
+aaa 1
+horosho 1
+hello 2
+
+most rare word: 
+aaa, his count = 1
+horosho, his count = 1
+
+most common word: 
+hello, his count = 2
