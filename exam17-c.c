@@ -1,49 +1,57 @@
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
-enum {IN, OUT};
-int main (void)
+int main()
 {
     char s[256];
+    printf("enter the string:\n");
     fgets(s, 256, stdin);
-    
     char *p = strchr(s, '\n');
     if (p != NULL) p[0] = '\0';
-    
     size_t n = strlen(s);
-    
     printf("len: %ld\n", n);
-    
     int m = 0;
     for (int i = 0; i < n; i++)
     {
-        if (s[i] == ' ') m++;
-        }
-        printf("spcs: %d\n", m);
-        
-    int count = 0; // код на "4" и на "5"(работает частично)
-    int state = IN;
-    for (char *ch = s; *ch != '\0'; ch++)
-    {
-        switch (*ch) 
+        if (n > 0 && i == 0) 
         {
-            case '\n':
-            case ' ':
-                if (state == IN) 
-                {
-                    state = OUT;
-                    printf("len word: %d\n", count);
-                }
-                count = 0;
-                break;
-            default:
-                if (state == OUT)
-                    *ch = toupper(*ch),
-                    state = IN;
-                count++;
-                break;
+            char d = toupper(s[0]);
+            s[0] = d;
+        }
+        if (s[i] == ' ') m++;
+        if (s[i] == ' ' && i < n - 1)
+        {
+            char d = toupper(s[i + 1]);
+            s[i + 1] = d;
         }
     }
-    printf("%s", s); 
-        return 0;
+    if (n > 0) m++;
+    printf("words: %d\n", m);
+    for (int i = 0; i < n; i++)
+    printf("%c", s[i]);
+    printf("\n");
+    int bb = 0;
+    int c = 0;
+    int i = 0;
+    while (i < n)
+    {
+        printf("word: ");
+        int j = 0;
+        for (j = i; j < n; j++)
+        {
+            c++;
+            if (s[j] != ' ') 
+            {
+                printf("%c", s[j]);
+                bb++;
+            }
+            else j = n;
+        }
+        printf(" ");
+        i += bb + 1;
+        printf("len: %d\n", bb);
+        bb = 0;
+        if (i == n) break;
+    }
+    return 0;
 }
