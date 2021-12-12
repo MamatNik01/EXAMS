@@ -54,11 +54,11 @@ int main()
             fprintf(f2, "\n%c - %d", let_count[i].let, let_count[i].ind);        
     }
     fprintf(f2, "\n");
-    fprintf(f2, "least encountered characters: ");
+    fprintf(f2, "encountered: ");
     for (int i = 0; i < 95; i++)
         if (let_count[i].ind == min && let_count[i].ind > 0) fprintf(f2, " %c", let_count[i].let);
     fprintf(f2, "\n");
-    fprintf(f2, "most common characters: ");
+    fprintf(f2, "common: ");
     for (int i = 0; i < 95; i++)
         if (let_count[i].ind == max  && let_count[i].ind > 0) fprintf(f2, " %c", let_count[i].let);
     fclose(f2);
